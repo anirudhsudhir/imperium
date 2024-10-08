@@ -1,0 +1,11 @@
+services:
+  backend:
+    build: .
+    container_name: "backend"
+    ports:
+      - "8000:8000"
+  mongodb:
+    image: "mongodb/mongodb-community-server"
+    container_name: "mongodb"
+    ports:
+      - "27017:27017"
