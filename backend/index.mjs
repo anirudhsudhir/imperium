@@ -5,6 +5,7 @@ import "express-async-errors";
 
 import pingRouter from "./routes/ping.mjs";
 import postsRouter from "./routes/posts.mjs";
+import usersRouter from "./routes/users.mjs";
 
 const PORT = process.env.PORT || 8000;
 const app = express();
@@ -14,9 +15,10 @@ app.use(express.json());
 
 app.use("/ping", pingRouter);
 app.use("/posts", postsRouter);
+app.use("/users", usersRouter);
 
 app.use((err, _req, res, next) => {
-  res.status(500).send("Uh oh! An unexpected error occured.");
+  res.status(500).send("Uh oh! An unexpected error occured - " + err);
 });
 
 app.listen(PORT, () => {
