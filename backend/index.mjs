@@ -18,7 +18,7 @@ app.use("/posts", postsRouter);
 app.use("/users", usersRouter);
 
 app.use((err, _req, res, next) => {
-  res.status(500).send("Uh oh! An unexpected error occured - " + err);
+  res.json("Uh oh! An unexpected error occured - " + err).status(500);
 });
 
 app.listen(PORT, () => {

@@ -7,16 +7,16 @@ import jsonwebtoken from "jsonwebtoken";
 const router = express.Router();
 
 const USERS_COLLECTION = "users";
-const JWT_EXPIRY_TIME = "900s";
+const JWT_EXPIRY_TIME = 900;
 
 const userLoginSchema = {
   username: {
-    errorMessage: "Invalid username",
+    errorMessage: "Empty username is invalid",
     notEmpty: true,
     escape: true,
   },
   password: {
-    errorMessage: "Invalid password",
+    errorMessage: "Empty password is invalid",
     notEmpty: true,
   },
 };
@@ -40,9 +40,11 @@ const userSignupSchema = {
 router.post("/login", checkSchema(userLoginSchema), async (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    return res
+      .json({
+        errors: errors.array(),
+      })
+      .status(400);
   } else {
     console.log("Valid request to /login with body: ");
     console.log(req.body);
@@ -54,18 +56,22 @@ router.post("/login", checkSchema(userLoginSchema), async (req, res) => {
 
   let result = await collection.findOne({ username: username });
   if (!result) {
-    return res.status(400).json({
-      errors: "no such user",
-    });
+    return res
+      .json({
+        errors: "no such user",
+      })
+      .status(400);
   }
 
   if (result["password"] != password) {
-    return res.status(400).json({
-      errors: "incorrect password",
-    });
+    return res
+      .json({
+        errors: "incorrect password",
+      })
+      .status(400);
   }
 
-  const token = jsonwebtoken.sign(username, process.env.TOKEN_SECRET, {
+  const token = jsonwebtoken.sign({ username }, process.env.TOKEN_SECRET, {
     expiresIn: JWT_EXPIRY_TIME,
   });
   res.json(token).status(200);
@@ -74,9 +80,11 @@ router.post("/login", checkSchema(userLoginSchema), async (req, res) => {
 router.post("/signup", checkSchema(userSignupSchema), async (req, res) => {
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({
-      errors: errors.array(),
-    });
+    return res
+      .json({
+        errors: errors.array(),
+      })
+      .status(400);
   } else {
     console.log("Valid request to /signup with body: ");
     console.log(req.body);
@@ -90,15 +98,39 @@ router.post("/signup", checkSchema(userSignupSchema), async (req, res) => {
   if (!result) {
     let result = await collection.insertOne(req.body);
   } else {
-    return res.status(400).json({
-      errors: "user with username already exists",
-    });
+    return res
+      .json({
+        errors: "user with username already exists",
+      })
+      .status(400);
   }
 
-  const token = jsonwebtoken.sign(username, process.env.TOKEN_SECRET, {
+  const token = jsonwebtoken.sign({ username }, process.env.TOKEN_SECRET, {
     expiresIn: JWT_EXPIRY_TIME,
   });
   res.json(token).status(200);
 });
+
+export function authenticateToken(req, res, next) {
+  console.log("starting auth for request with body: ", req.body);
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
+  if (token == null) {
+    return res.status(401);
+  }
+
+  jsonwebtoken.verify(token, process.env.TOKEN_SECRET, (err, tokenClaims) => {
+    if (err) {
+      console.log(err);
+      return res.status(403);
+    }
+
+    req.user = tokenClaims.username;
+    console.log("authenticated user: ", req.user);
+
+    next();
+  });
+}
 
 export default router;
