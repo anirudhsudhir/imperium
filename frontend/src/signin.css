@@ -4,6 +4,10 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
+    width: 1050px;
+    height: 600px;
+    margin: 0 auto;
+    margin-left: 200px;
     
     
 }
@@ -12,19 +16,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-image: url('glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg');
+    background-image: url('../public/glenn-carstens-peters-npxXWgQ33ZQ-unsplash.jpg');
     background-size: cover; 
     background-position: center; 
     background-repeat: no-repeat;
     color: white;
     box-shadow: 10px 14px 10px rgba(0, 0, 0, 0.1);
-    
+    flex: 1;
     height: 650px;
-    width: 550px;
+    width: 500px;
     margin: 0; 
     padding: 0;
 }
-.main-container > div:not(:last-child) {
+.main-container  {
     margin-right: 0; }
 
 .sign-in {
@@ -38,6 +42,7 @@
     margin: 0;
     box-shadow: 10px 14px 10px rgba(0, 0, 0, 0.1);
     border: #3db299;
+    flex: 1;
    
 }
 .sign-in #h{
@@ -66,7 +71,7 @@ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  }
     margin-bottom: 25px;
     padding: 10px;
     width: 350px;
-    background-color: rgb(236, 199, 190);  
+    background-color: rgb(190, 236, 230);  
     border-radius: 15px;
     border: none; }
 
@@ -176,4 +181,36 @@ font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;  }
     color: white;
     width: 140px;
     
+}
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255); /* Semi-transparent white background */
+    z-index: 999;
+}
+
+.loading-content {
+    text-align: center;
+    font-size: 1.5em;
+    color: #333;
+    background-color: rgba(255, 255, 255); /* Same background color for consistency */
+    padding: 20px;
+   
+}
+.txt1{
+    background-color: rgba(255, 255, 255);
+}
+
+.ring1 {
+    background-color: rgba(255, 255, 255);
+
+}
+.ring1 svg{
+    background-color: rgba(255, 255, 255);
 }

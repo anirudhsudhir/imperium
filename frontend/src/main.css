@@ -1,0 +1,52 @@
+.Main{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(245, 244, 236);
+    z-index: 999;}
+.NAV2{
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
+    background-color: rgb(245, 244, 236);
+    
+    
+}
+
+.NAV2 .Mnav{
+    margin-left: auto;
+    background-color: rgb(245, 244, 236);
+    
+}
+.NAV2 a{
+    text-decoration: none;
+    background-color: rgb(245, 244, 236);
+}
+.NAV2 h2{
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    background-color: rgb(245, 244, 236);
+    font-size: 30px;
+}
+.vertical-line {
+    width: 1px;             
+    height: 1000px;          
+    background-color: rgba(126, 123, 123,0.3); 
+    margin: auto;
+    margin-right: 600px; 
+    
+  }
+
+  .small-horizontal-line {
+    width: 700px;
+    height: 1px;
+    background-color: #ccc;
+    position: absolute;
+    top: 150px; 
+    left: 30px;
+ 
+  }
+
