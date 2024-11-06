@@ -117,13 +117,14 @@ export function authenticateToken(req, res, next) {
   const token = authHeader && authHeader.split(" ")[1];
 
   if (token == null) {
-    return res.status(401);
+    console.log("no authorization token specified");
+    return res.json("no authorization token specified").status(401);
   }
 
   jsonwebtoken.verify(token, process.env.TOKEN_SECRET, (err, tokenClaims) => {
     if (err) {
       console.log(err);
-      return res.status(403);
+      return res.json("invalid authorization token" + token).status(403);
     }
 
     req.user = tokenClaims.username;
