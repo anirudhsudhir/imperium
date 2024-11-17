@@ -1,0 +1,14 @@
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.nav-header {
+    font-size: x-large;
+    font-weight: 700;
+}
+
+.nav-links-container {
+    display: flex;
+    gap: 1em;
+}
