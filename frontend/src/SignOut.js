@@ -1,9 +1,10 @@
 import { Navigate } from "react-router-dom"
+import { FELandingRoute } from "./AppRoutes";
 
 const SignOut = () => {
     localStorage.removeItem('jwt');
     return <>
-        <Navigate to="/" replace />
+        <Navigate to={FELandingRoute} replace />
     </>
 }
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { FEAuthHomeRoute, FESignInRoute } from './AppRoutes';
+import { isAuthenticated } from './ProtectedRoute';
 
 const Landing = () => {
     return (
@@ -18,7 +20,11 @@ const Landing = () => {
             }}>
                 Welcome to Imperium. A place to read, write and access information about the growing world.
                 <div className='landing-links'>
-                    <Link to="/signin">Start your journey!</Link>
+                    {
+                        !isAuthenticated() ?
+                            <Link to={FESignInRoute}>Start your journey!</Link> :
+                            <Link to={FEAuthHomeRoute}>Start your journey!</Link>
+                    }
                 </div>
             </div>
         </div>

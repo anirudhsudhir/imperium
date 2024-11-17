@@ -1,27 +1,29 @@
-import App from './App';
 import Landing from './Landing';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
-import SignOut from './SignOut';
 import Home from './Home';
-import ProtectedRoute from './ProtectedRoute';
+import MyBlogs from './MyBlogs';
+import Write from './Write';
+import Account from './Account';
+import SignOut from './SignOut';
+import { ProtectedRoute, UnProtectedRoute } from './ProtectedRoute';
+import { FEAuthAccountRoute, FEAuthHomeRoute, FEAuthMyBlogsRoute, FEAuthSignOutRoute, FEAuthWriteRoute, FELandingRoute, FESignInRoute, FESignUpRoute } from './AppRoutes';
 
 const routes = [
     {
-        path: "/",
-        element: <App />
-        ,
+        path: FELandingRoute,
+        element: <UnProtectedRoute />,
         children: [
             {
                 index: true,
                 element: <Landing />
             },
             {
-                path: "/signin",
+                path: FESignInRoute,
                 element: <SignIn />
             },
             {
-                path: "/signup",
+                path: FESignUpRoute,
                 element: <SignUp />
             },
         ]
@@ -31,32 +33,27 @@ const routes = [
         element: <ProtectedRoute />,
         children: [
             {
-                children: [
-                    {
-                        index: true,
-                        element: <Home />
-
-                    },
-                    // {
-                    //     path: "/user/myblogs",
-                    //     element: <MyBlogs />
-                    // },
-                    // {
-                    //     path: "/user/newblog",
-                    //     element: <NewBlog />
-                    // },
-                    // {
-                    //     path: "/user/account",
-                    //     element: <Account />
-                    // },
-                    {
-                        path: "/user/signout",
-                        element: <SignOut />
-                    }
-                ]
+                path: FEAuthHomeRoute,
+                element: <Home />
             },
+            {
+                path: FEAuthMyBlogsRoute,
+                element: <MyBlogs />
+            },
+            {
+                path: FEAuthWriteRoute,
+                element: <Write />
+            },
+            {
+                path: FEAuthAccountRoute,
+                element: <Account />
+            },
+            {
+                path: FEAuthSignOutRoute,
+                element: <SignOut />
+            }
         ]
-    }
+    },
 ]
 
 export default routes;

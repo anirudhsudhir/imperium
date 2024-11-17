@@ -1,4 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { FEAuthHomeRoute, FELandingRoute } from "./AppRoutes";
+import App from "./App";
 
 export const isAuthenticated = () => {
     if (localStorage.getItem('jwt')) {
@@ -7,11 +9,16 @@ export const isAuthenticated = () => {
     return false
 }
 
-const ProtectedRoute = () => {
+export const UnProtectedRoute = () => {
     if (!isAuthenticated()) {
-        return <Navigate to="/" replace />
+        return <App />
     }
-    return <Outlet />
+    return <Navigate to={FEAuthHomeRoute} replace />
 }
 
-export default ProtectedRoute;
+export const ProtectedRoute = () => {
+    if (!isAuthenticated()) {
+        return <Navigate to={FELandingRoute} replace />
+    }
+    return <App />
+}
