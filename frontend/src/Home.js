@@ -5,16 +5,16 @@ import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <div className='app-header'>
+    <div className="Home">
+      <div className='home-header'>
         <Navbar />
       </div>
 
-      <div className='app-content'>
+      <div className='home-content'>
         <Outlet />
       </div>
 
-      <div className='app-footer'>
+      <div className='home-footer'>
         <Footer />
       </div>
     </div >
