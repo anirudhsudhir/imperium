@@ -28,3 +28,7 @@
 .form-element input {
     width: 15em;
 }
+
+.form-alert {
+    color: red;
+}
