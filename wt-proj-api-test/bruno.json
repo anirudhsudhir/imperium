@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "wt-proj",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

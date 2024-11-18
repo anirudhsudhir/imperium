@@ -1,0 +1,40 @@
+#write-form,
+.form-element {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+#write-form button {
+    background-color: var(--ui);
+    border: none;
+    border: 1px solid var(--tx);
+    border-radius: 5px;
+    padding: 0.5em;
+    width: max-content;
+    font-size: 0.8em;
+}
+
+#write-form input {
+    background-color: var(--bg-2);
+    border: none;
+    border: 1px solid var(--tx);
+    border-radius: 5px;
+    padding: 0.5em;
+    width: max-content;
+    font-size: 0.8em;
+}
+
+.form-element input {
+    width: 15em;
+}
+
+.form-element textarea {
+    background-color: var(--bg-2);
+    width: 50em;
+    height: 25em;
+}
+
+.form-alert {
+    color: red;
+}

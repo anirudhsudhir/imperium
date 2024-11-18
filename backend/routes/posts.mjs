@@ -52,19 +52,16 @@ router.post(
   checkSchema(postCreateUpdateSchema),
   async (req, res) => {
     console.log("[POSTS][/create][POST] Received a /create request on the posts route")
-    if (req.body.author != req.user) {
-      console.log("[POSTS][/create][POST] creating a post with another username is an invalid operation")
-      return res.status(400)
-        .json("creating a post with another username is an invalid operation")
-    }
 
     let collection = db.collection(POSTS_COLLECTION);
     let newPost = req.body;
-    console.log("[POSTS][/create][POST] Received a /create request on the posts route with body -> ", req.body)
+    newPost.author = req.user;
     newPost.date = new Date();
 
     let result = await collection.insertOne(newPost);
-    res.status(204).json(result);
+    console.log("[POSTS][/create][POST] Inserted blog to DB -> ", req.body)
+    console.log("[POSTS][/create][POST] DB Result -> ", result)
+    res.status(200).json({ blogId: result.insertedId.toString() });
   },
 );
 

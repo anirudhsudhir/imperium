@@ -62,6 +62,7 @@ const Home = () => {
     <div
       className="home-container"
       style={{
+        width: "100%",
         display: "flex",
         flexDirection: "column",
         padding: "1em 0.5em 2em",
