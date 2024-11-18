@@ -26,23 +26,22 @@ const postCreateUpdateSchema = {
 
 router.use(authenticateToken);
 
-// First 10 posts
-router.get("/", async (req, res) => {
-  console.log("[POSTS][/][GET]Received a / request on the posts route")
+router.get("/all", async (req, res) => {
+  console.log("[POSTS][/][GET]Received a /all request on the posts route")
   let collection = db.collection(POSTS_COLLECTION);
   let postResults = await collection
-    .find({ author: { $ne: req.user } })
-    .limit(10)
+    .find({})
     .toArray();
 
   res.status(200).json(postResults);
 });
 
-router.get("/all", async (req, res) => {
-  console.log("[POSTS][/][GET]Received a /all request on the posts route")
+// Specific user posts
+router.get("/user/:username", async (req, res) => {
+  console.log("[POSTS][/user/:username][GET]Received a /user/:username request on the posts route")
   let collection = db.collection(POSTS_COLLECTION);
   let postResults = await collection
-    .find({ author: { $ne: req.user } })
+    .find({ author: req.params.username })
     .toArray();
 
   res.status(200).json(postResults);

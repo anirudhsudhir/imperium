@@ -42,6 +42,7 @@ const SignIn = () => {
 
     console.log("successful sign in with token -> ", data);
     localStorage.setItem("jwt", data);
+    localStorage.setItem("username", formData.get("username"));
     navigate(FEAuthHomeRoute);
   };
 

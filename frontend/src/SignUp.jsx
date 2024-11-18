@@ -40,6 +40,7 @@ const SignUp = () => {
 
     console.log("successful sign up with token -> ", data);
     localStorage.setItem("jwt", data);
+    localStorage.setItem("username", formData.get("username"));
     navigate(FEAuthHomeRoute);
   };
   return (
