@@ -3,6 +3,7 @@ import { checkSchema, validationResult } from "express-validator";
 
 import db from "../db/db.mjs";
 import jsonwebtoken from "jsonwebtoken";
+import { BLOGS_COLLECTION } from "./posts.mjs";
 
 const router = express.Router();
 
@@ -99,6 +100,33 @@ router.post("/signup", checkSchema(userSignupSchema), async (req, res) => {
   console.log("[USERS][/signup][POST] Sending JWT -> ", token)
   res.status(200).json(token);
 });
+
+router.delete("/delete/:username", authenticateToken, async (req, res) => {
+  console.log("[USERS][/delete/:username][DELETE] Received a /delete/:username request on the users route")
+  const usernameToDelete = req.params.username
+  if (usernameToDelete != req.user) {
+    console.log("[USERS][/delete/:username][DELETE] Deleting an account using another user's account is forbidden")
+    return res.status(400).json({ errors: "Deleting an account using another user's account is forbidden" })
+  }
+
+  let usersCollection = db.collection(USERS_COLLECTION);
+  let userDelete = await usersCollection.deleteOne({ username: usernameToDelete });
+  if (!userDelete) {
+    console.log("[USERS][/delete/:username][DELETE] No such user -> ", usernameToDelete)
+    return res.status(400).json({
+      username: "Username does not exist",
+    });
+  }
+
+  let blogCollection = db.collection(BLOGS_COLLECTION);
+  let blogsDelete = await blogCollection.deleteMany({ author: usernameToDelete });
+  if (!blogsDelete) {
+    console.log("[USERS][/delete/:username][DELETE] No blogs to be deleted from user -> ", username)
+  }
+
+  console.log("[POSTS][/:id][DELETE] Deleted user and user blogs from DB -> ", userDelete, blogsDelete)
+  res.status(200).json(userDelete);
+})
 
 export function authenticateToken(req, res, next) {
   console.log("[AUTH-MIDDLEWARE]starting auth for request with body: ", req.body);

@@ -7,7 +7,7 @@ import { checkSchema } from "express-validator";
 
 const router = express.Router();
 
-const POSTS_COLLECTION = "posts";
+export const BLOGS_COLLECTION = "posts";
 
 const postCreateUpdateSchema = {
   title: {
@@ -28,7 +28,7 @@ router.use(authenticateToken);
 
 router.get("/all", async (req, res) => {
   console.log("[POSTS][/][GET]Received a /all request on the posts route")
-  let collection = db.collection(POSTS_COLLECTION);
+  let collection = db.collection(BLOGS_COLLECTION);
   let postResults = await collection
     .find({})
     .toArray();
@@ -39,7 +39,7 @@ router.get("/all", async (req, res) => {
 // Specific user posts
 router.get("/user/:username", async (req, res) => {
   console.log("[POSTS][/user/:username][GET]Received a /user/:username request on the posts route")
-  let collection = db.collection(POSTS_COLLECTION);
+  let collection = db.collection(BLOGS_COLLECTION);
   let postResults = await collection
     .find({ author: req.params.username })
     .toArray();
@@ -53,7 +53,7 @@ router.post(
   async (req, res) => {
     console.log("[POSTS][/create][POST] Received a /create request on the posts route")
 
-    let collection = db.collection(POSTS_COLLECTION);
+    let collection = db.collection(BLOGS_COLLECTION);
     let newPost = req.body;
     newPost.author = req.user;
     newPost.date = new Date();
@@ -69,7 +69,7 @@ router.get("/:id", async (req, res) => {
   console.log("[POSTS][/:id][GET]Received a /:id request on the posts route")
   const query = { _id: ObjectId.createFromHexString(req.params.id) };
 
-  let collection = db.collection(POSTS_COLLECTION);
+  let collection = db.collection(BLOGS_COLLECTION);
   let result = await collection.findOne(query);
 
   res.status(200).json(result);
@@ -82,7 +82,7 @@ router.put("/:id", checkSchema(postCreateUpdateSchema), async (req, res) => {
   updatedPost.author = req.user;
   updatedPost.date = new Date();
   const query = { _id: ObjectId.createFromHexString(req.params.id) };
-  let collection = db.collection(POSTS_COLLECTION);
+  let collection = db.collection(BLOGS_COLLECTION);
   let blogToUpdate = await collection.findOne(query);
 
   if (blogToUpdate.author != req.user) {
@@ -101,7 +101,7 @@ router.delete("/:id", async (req, res) => {
   console.log("[POSTS][/:id][DELETE]Received a /:id request on the posts route")
 
   const query = { _id: ObjectId.createFromHexString(req.params.id) };
-  let collection = db.collection(POSTS_COLLECTION);
+  let collection = db.collection(BLOGS_COLLECTION);
   let blogToDelete = await collection.findOne(query);
 
   if (blogToDelete.author != req.user) {

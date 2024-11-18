@@ -5,6 +5,7 @@ export const BEAuthUserPostsRoute = "/posts/user/"; // +"/:username"
 export const BEAuthWriteRoute = "/posts/create";
 // For GET, PUT and DELETE requests
 export const BEAuthSpecificPostRoute = "/posts/"; // +"/:id"
+export const BEAuthDeleteUser = "/users/delete/";
 
 export const FELandingRoute = "/";
 export const FESignInRoute = "/signin";
