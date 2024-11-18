@@ -36,10 +36,12 @@ const Home = () => {
               <Link to={FEAuthSpecificBlogRoute + post._id}>{post.title}</Link>
             </div>
             <div className="post-card-author">Author: {post.author}</div>
-            <div className="post-card-date">
-              Date:
-              {" " + post["date"].split("T")[0]}
-            </div>
+            {post.date && (
+              <div className="post-card-date">
+                Date:
+                {" " + post["date"].split("T")[0]}
+              </div>
+            )}
           </div>
         ));
         setAllPosts(allPostCards);
@@ -48,6 +50,7 @@ const Home = () => {
         throw new Error(err);
       }
     } catch (err) {
+      console.log(err);
       const errMsg = JSON.parse(err.message);
       console.log("failed to fetch all posts -> ", errMsg);
       setAllPostsAlert(errMsg);

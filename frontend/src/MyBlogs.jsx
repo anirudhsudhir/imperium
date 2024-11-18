@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  BEAuthHomeRoute,
   BEAuthUserPostsRoute,
+  FEAuthDeleteBlogRoute,
+  FEAuthEditBlogRoute,
   FEAuthSpecificBlogRoute,
 } from "./RouteDefinitions";
 import { Link } from "react-router-dom";
@@ -41,8 +42,32 @@ const MyBlogs = () => {
               gap: "0.2em",
             }}
           >
-            <div className="post-card-title">
-              <Link to={FEAuthSpecificBlogRoute + post._id}>{post.title}</Link>
+            <div
+              className="post-card-title-edit-delete"
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+              }}
+            >
+              <div className="post-card-title">
+                <Link to={FEAuthSpecificBlogRoute + post._id}>
+                  {post.title}
+                </Link>
+              </div>
+              <div
+                className="post-card-delete-edit-container"
+                style={{
+                  display: "flex",
+                  gap: "1em",
+                }}
+              >
+                <div className="post-card-edit">
+                  <Link to={FEAuthEditBlogRoute + post._id}>Edit Blog</Link>
+                </div>
+                <div className="post-card-delete">
+                  <Link to={FEAuthDeleteBlogRoute + post._id}>Delete Blog</Link>
+                </div>
+              </div>
             </div>
             <div className="post-card-author">Author: {post.author}</div>
             <div className="post-card-date">

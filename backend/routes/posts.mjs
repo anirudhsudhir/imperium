@@ -77,31 +77,41 @@ router.get("/:id", async (req, res) => {
 
 router.put("/:id", checkSchema(postCreateUpdateSchema), async (req, res) => {
   console.log("[POSTS][/:id][PUT]Received a /:id request on the posts route")
-  if (req.body.author != req.user) {
-    console.log("[POSTS][PUT][/:id]updating a post with another username is an invalid operation")
-    return res.status(200)
-      .json("updating a post with another username is an invalid operation")
-  }
 
+  let updatedPost = req.body;
+  updatedPost.author = req.user;
+  updatedPost.date = new Date();
   const query = { _id: ObjectId.createFromHexString(req.params.id) };
   let collection = db.collection(POSTS_COLLECTION);
-  let result = await collection.replaceOne(query, req.body);
+  let blogToUpdate = await collection.findOne(query);
 
-  res.status(200).json(result);
+  if (blogToUpdate.author != req.user) {
+    console.log("[POSTS][/:id][DELETE][/:id]deleting a post with another username is an invalid operation")
+    return res.status(400)
+      .json("updating a post with another username is an invalid operation")
+  }
+  let result = await collection.replaceOne(query, updatedPost);
+
+  console.log("[POSTS][/:id][PUT] Updated blog in DB -> ", req.body)
+  console.log("[POSTS][/:id][PUT] DB Result -> ", result)
+  res.status(200).json({ blogId: req.params.id });
 });
 
 router.delete("/:id", async (req, res) => {
   console.log("[POSTS][/:id][DELETE]Received a /:id request on the posts route")
-  if (req.body.author != req.user) {
-    console.log("[POSTS][/:id][DELETE][/:id]deleting a post with another username is an invalid operation")
-    return res.status(200)
-      .json("deleting a post with another username is an invalid operation")
-  }
 
   const query = { _id: ObjectId.createFromHexString(req.params.id) };
   let collection = db.collection(POSTS_COLLECTION);
+  let blogToDelete = await collection.findOne(query);
+
+  if (blogToDelete.author != req.user) {
+    console.log("[POSTS][/:id][DELETE][/:id]deleting a post with another username is an invalid operation")
+    return res.status(400)
+      .json("deleting a post with another username is an invalid operation")
+  }
   let result = await collection.deleteOne(query);
 
+  console.log("[POSTS][/:id][DELETE] Deleted blog from DB -> ", result)
   res.status(200).json(result);
 });
 

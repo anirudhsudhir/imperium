@@ -32,7 +32,7 @@ const Blog = () => {
       }
     } catch (err) {
       const errMsg = JSON.parse(err.message);
-      console.log("failed to fetch all posts -> ", errMsg);
+      console.log("failed to fetch the specific blog -> ", errMsg);
       setAllPostsAlert(errMsg);
     }
   };

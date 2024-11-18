@@ -10,6 +10,8 @@ import Blog from "./Blog";
 import { ProtectedRoute, UnProtectedRoute } from "./ProtectedRoute";
 import {
   FEAuthAccountRoute,
+  FEAuthDeleteBlogRoute,
+  FEAuthEditBlogRoute,
   FEAuthHomeRoute,
   FEAuthMyBlogsRoute,
   FEAuthSignOutRoute,
@@ -19,6 +21,8 @@ import {
   FESignInRoute,
   FESignUpRoute,
 } from "./RouteDefinitions";
+import DeleteBlog from "./DeleteBlog";
+import EditBlog from "./EditBlog";
 
 const routes = [
   {
@@ -65,6 +69,14 @@ const routes = [
       {
         path: FEAuthSpecificBlogRoute + ":blogId",
         element: <Blog />,
+      },
+      {
+        path: FEAuthEditBlogRoute + ":blogId",
+        element: <EditBlog />,
+      },
+      {
+        path: FEAuthDeleteBlogRoute + ":blogId",
+        element: <DeleteBlog />,
       },
     ],
   },

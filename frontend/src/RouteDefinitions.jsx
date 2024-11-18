@@ -15,5 +15,6 @@ export const FEAuthMyBlogsRoute = "/myblogs";
 export const FEAuthWriteRoute = "/write";
 export const FEAuthAccountRoute = "/account";
 export const FEAuthSignOutRoute = "/signout";
-
-export const FEAuthSpecificBlogRoute = "/blog/";
+export const FEAuthSpecificBlogRoute = "/blog/"; // +"/:id"
+export const FEAuthEditBlogRoute = "/blog/edit/"; // +"/:id"
+export const FEAuthDeleteBlogRoute = "/blog/delete/"; // +"/:id"

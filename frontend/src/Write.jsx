@@ -8,7 +8,7 @@ const Write = () => {
   const [titleAlert, setTitleAlert] = useState("");
   const [bodyAlert, setBodyAlert] = useState("");
 
-  const handleSignIn = async (event) => {
+  const handleBlogWrite = async (event) => {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -51,7 +51,7 @@ const Write = () => {
     <div className="write-container">
       <div className="write">
         <h2>Pen your thoughts</h2>
-        <form id="write-form" onSubmit={handleSignIn}>
+        <form id="write-form" onSubmit={handleBlogWrite}>
           <div className="form-element">
             <label htmlFor="form-title">Title of the blog</label>
             {titleAlert && (
