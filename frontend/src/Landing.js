@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { FEAuthHomeRoute, FESignInRoute } from './AppRoutes';
+import { FEAuthHomeRoute, FESignInRoute } from './RouteDefinitions';
 import { isAuthenticated } from './ProtectedRoute';
 
 const Landing = () => {

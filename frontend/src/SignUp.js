@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import "./SignIn.css";
-import { BESignUpRoute, FEAuthHomeRoute } from './AppRoutes.js';
+import { BESignUpRoute, FEAuthHomeRoute } from './RouteDefinitions.js';
 
 const SignUp = () => {
     const navigate = useNavigate();

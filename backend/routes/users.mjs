@@ -7,7 +7,6 @@ import jsonwebtoken from "jsonwebtoken";
 const router = express.Router();
 
 const USERS_COLLECTION = "users";
-const JWT_EXPIRY_TIME = 900;
 
 const userLoginSchema = {
   username: {
@@ -38,15 +37,13 @@ const userSignupSchema = {
 };
 
 router.post("/signin", checkSchema(userLoginSchema), async (req, res) => {
+  console.log("[USERS][/signin][POST] Received a /signin request on the users route")
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors);
+    console.log("[USERS][/signin][POST] Invalid endpoint schema -> ", errors)
     return res.status(400).json({
       errors: errors.array(),
     });
-  } else {
-    console.log("Valid request to /login with body: ");
-    console.log(req.body);
   }
 
   const { username, password } = req.body;
@@ -55,31 +52,32 @@ router.post("/signin", checkSchema(userLoginSchema), async (req, res) => {
 
   let result = await collection.findOne({ username: username });
   if (!result) {
+    console.log("[USERS][/signin][POST] No such user -> ", username)
     return res.status(400).json({
-      errors: "no such user",
+      username: "Username does not exist",
     });
   }
 
   if (result["password"] != password) {
+    console.log("[USERS][/signin][POST] Incorrect password for user -> ", password, username)
     return res.status(400).json({
-      errors: "incorrect password",
+      password: "Incorrect password",
     });
   }
 
   const token = jsonwebtoken.sign({ username }, process.env.TOKEN_SECRET);
+  console.log("[USERS][/signin][POST] Sending JWT -> ", token)
   res.status(200).json(token);
 });
 
 router.post("/signup", checkSchema(userSignupSchema), async (req, res) => {
+  console.log("[USERS][/signup][POST] Received a /signin request on the users route")
   let errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log(errors);
+    console.log("[USERS][/signup][POST] Invalid endpoint schema -> ", errors)
     return res.status(400).json({
       errors: errors.array(),
     });
-  } else {
-    console.log("Valid request to /signup with body: ");
-    console.log(req.body);
   }
 
   const { email, username, password } = req.body;
@@ -89,34 +87,37 @@ router.post("/signup", checkSchema(userSignupSchema), async (req, res) => {
   let result = await collection.findOne({ username: username });
   if (!result) {
     let result = await collection.insertOne(req.body);
+    console.log("[USERS][/signup][POST] Created user with password in DB -> ", username, password)
   } else {
+    console.log("[USERS][/signup][POST] User already exists -> ", username)
     return res.status(400).json({
-      errors: "user with username already exists",
+      username: "Username already exists",
     });
   }
 
   const token = jsonwebtoken.sign({ username }, process.env.TOKEN_SECRET);
+  console.log("[USERS][/signup][POST] Sending JWT -> ", token)
   res.status(200).json(token);
 });
 
 export function authenticateToken(req, res, next) {
-  console.log("starting auth for request with body: ", req.body);
+  console.log("[AUTH-MIDDLEWARE]starting auth for request with body: ", req.body);
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
 
   if (token == null) {
-    console.log("no authorization token specified");
+    console.log("[AUTH-MIDDLEWARE] no authorization token specified");
     return res.status(401).json("no authorization token specified");
   }
 
   jsonwebtoken.verify(token, process.env.TOKEN_SECRET, (err, tokenClaims) => {
     if (err) {
-      console.log(err);
+      console.log("[AUTH-MIDDLEWARE]", err);
       return res.status(403).json("invalid authorization token" + token);
     }
 
     req.user = tokenClaims.username;
-    console.log("authenticated user: ", req.user);
+    console.log("[AUTH-MIDDLEWARE] authenticated user: ", req.user);
 
     next();
   });

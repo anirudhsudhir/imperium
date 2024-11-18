@@ -7,7 +7,7 @@ import Write from './Write';
 import Account from './Account';
 import SignOut from './SignOut';
 import { ProtectedRoute, UnProtectedRoute } from './ProtectedRoute';
-import { FEAuthAccountRoute, FEAuthHomeRoute, FEAuthMyBlogsRoute, FEAuthSignOutRoute, FEAuthWriteRoute, FELandingRoute, FESignInRoute, FESignUpRoute } from './AppRoutes';
+import { FEAuthAccountRoute, FEAuthHomeRoute, FEAuthMyBlogsRoute, FEAuthSignOutRoute, FEAuthWriteRoute, FELandingRoute, FESignInRoute, FESignUpRoute } from './RouteDefinitions';
 
 const routes = [
     {

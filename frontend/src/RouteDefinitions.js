@@ -3,7 +3,7 @@ export const BESignInRoute = "/users/signin"
 
 export const FELandingRoute = "/"
 export const FESignInRoute = "/signin"
-export const FESignUpRoute = "/signin"
+export const FESignUpRoute = "/signup"
 
 export const FEAuthHomeRoute = "/user/home"
 export const FEAuthMyBlogsRoute = "/user/myblogs"

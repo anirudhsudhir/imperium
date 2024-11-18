@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import './Navbar.css';
 import { isAuthenticated } from './ProtectedRoute';
-import { FEAuthAccountRoute, FEAuthHomeRoute, FEAuthMyBlogsRoute, FEAuthSignOutRoute, FEAuthWriteRoute, FELandingRoute, FESignInRoute, FESignUpRoute } from "./AppRoutes";
+import { FEAuthAccountRoute, FEAuthHomeRoute, FEAuthMyBlogsRoute, FEAuthSignOutRoute, FEAuthWriteRoute, FELandingRoute, FESignInRoute, FESignUpRoute } from "./RouteDefinitions";
 
 const Navbar = () => {
     return (

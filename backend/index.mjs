@@ -12,13 +12,18 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use((req, res, next) => {
+  req.time = new Date(Date.now()).toString();
+  console.log("[DEFAULT LOGGER] -> ", req.method, req.hostname, req.path, req.time);
+  next();
+});
 
 app.use("/ping", pingRouter);
 app.use("/posts", postsRouter);
 app.use("/users", usersRouter);
 
 app.use((err, _req, res, next) => {
-  res.json("Uh oh! An unexpected error occured - " + err).status(500);
+  res.status(500).json("Uh oh! An unexpected error occured - " + err);
 });
 
 app.listen(PORT, () => {

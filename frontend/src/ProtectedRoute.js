@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom";
-import { FEAuthHomeRoute, FELandingRoute } from "./AppRoutes";
+import { FEAuthHomeRoute, FELandingRoute } from "./RouteDefinitions";
 import App from "./App";
 
 export const isAuthenticated = () => {

@@ -1,5 +1,5 @@
 import { Navigate } from "react-router-dom"
-import { FELandingRoute } from "./AppRoutes";
+import { FELandingRoute } from "./RouteDefinitions";
 
 const SignOut = () => {
     localStorage.removeItem('jwt');
